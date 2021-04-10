@@ -1,3 +1,18 @@
+/*
+
+Universidade Federal de Goiás - UFG
+Instituto de Informática - INF
+Algoritmos e Estruturas de Dados 1 - AED
+
+    PROJETO FINAL DA DISCIPLINA
+
+Alunos: GUSTAVO HENRIQUE DE FREITAS MARTINS
+	    JOSIMAR MORAIS DOS SANTOS
+
+SVPA - SISTEMA DE VENDAS DE PASSAGENS DE AVIÃO
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
