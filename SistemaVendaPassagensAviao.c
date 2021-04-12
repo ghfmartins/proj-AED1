@@ -38,9 +38,9 @@ typedef struct passagem{
 }Passagem;
 
 typedef struct {
-	Passagem passagem;
-	passagem* proximo;
-	passagem* anterior;
+	Passagem  passagem;
+	Passagem *proximo;
+	Passagem *anterior;
 }Elemento;
 
 typedef struct {
