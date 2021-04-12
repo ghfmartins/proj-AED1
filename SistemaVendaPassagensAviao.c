@@ -18,7 +18,9 @@ SVPA - SISTEMA DE VENDAS DE PASSAGENS DE AVIÃO
 #include <string.h>
 #define TRUE 1
 #define FALSE 0
-
+//===========================================================
+//Arquivo.h
+//===========================================================
 //DECLARACAO DE ESTRUTURAS:
 typedef struct {
 	int fila;
@@ -56,6 +58,17 @@ typedef struct{
     double valor;
 }Voo;
 
+//===========================================================
+//Arquivo.c
+//===========================================================
 
 
 
+//===========================================================
+//SistemaVendaPassagensAviao.c
+//===========================================================
+
+int main(){
+
+    return 0;
+}
