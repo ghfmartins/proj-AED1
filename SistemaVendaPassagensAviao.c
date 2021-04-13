@@ -68,7 +68,7 @@ typedef struct{
 int inicializaListaDeVoo (ApontadorLista l);
 int insereNovoRegistroNoInicio (ApontadorLista l, Passagem p);
 int iniciaVoo(Voo *v);
-int vendePassagem(ApontadorLista l);
+int vendePassagem(Voo *v);
 int escolheAssento(Assento *a);
 
 
@@ -78,8 +78,8 @@ int escolheAssento(Assento *a);
 //DECLARACAO DE METODOS:
 
 int inicializaListaDeVoo (ApontadorLista l){
-	l->inicio = NULL;
-	l->qtdePassageiros = 0;
+	(*l)->inicio = NULL;
+	(*l)->qtdePassageiros = 0;
 	
 	return SUCCESS;
 }
@@ -89,13 +89,15 @@ int insereNovoRegistroNoInicio (ApontadorLista l, Passagem p){
 	ApontadorRegistro primeiro;
 	
 	reg = (ApontadorRegistro) malloc (sizeof(Registro));
-	primeiro = *l->inicio
-	if(reg == NULL) return FAIL;
+	primeiro = (*l)->inicio;
+	if(reg == NULL) {
+		return FAIL;
+	}
 	else{
 		reg->passagem = p;
 	}
 		
-	if((l->qtdePassageiros == 0) {
+	if((l)->qtdePassageiros == 0) {
 		reg->anterior = NULL;
 		reg->proximo = NULL;
 		l->inicio = reg;
@@ -151,14 +153,14 @@ int iniciaVoo(Voo *v){
     return SUCCESS;
 }
 
-int vendePassagem(ApontadorLista l){
+int vendePassagem(Voo *v){
 	ApontadorPassagem p;
 	
 	p = (ApontadorPassagem) malloc (sizeof(Passagem));
 	
 	printf("\nPREENCHA OS DADOS DA PASSAGEM\n");
     printf("Insira o codigo da passagem: ");
-    scanf("%u", &(p->cod);
+    scanf("%u", &(p->cod));
     printf("\n");
     
     getchar();
@@ -181,9 +183,13 @@ int vendePassagem(ApontadorLista l){
     fgets(p->emais, 50, stdin);
     printf("\n");
     
+    printf("Insira o valor da passagem: R$");
+    scanf("%f", &(p->valor));
+    printf("\n");
+    
     escolheAssento(p->poltrona);
     
-    if(!(insereNovoRegistroNoInicio (l, p))) {
+    if(!(insereNovoRegistroNoInicio (&(v->passageiros), p))) {
     	printf("\nOperacao falhou!\n");
     	return FAIL;
 	}
@@ -206,12 +212,87 @@ int escolheAssento(Assento *a){
     return SUCCESS;
 }
 
+int menuOpcao(){
+    int opcao=0;
+    do {
+         system("cls"); 
+         printf("\n\n                      MENU   \n\n");
+        
+         printf("\t\t 1- Iniciar Voo \n\n");
+        
+         printf("\t\t 2- Vender Passagem \n\n");
+        
+         printf("\t\t 3- Relatorio de Vendas \n\n");
+        
+         printf("\t\t 4- Consultar Passageiro \n\n");
+         
+         printf("\t\t 5- Listar Passageiros\n\n");
+         
+         printf("\t\t 6- Mostrar Painel De Ocupacoes do Voo\n\n");
+         
+         printf("\t\t 7- Sair\n\n");
+        
+         printf("\t\t\t opcao: ");scanf("%d",&opcao);
+         
+         if(opcao <= 0 || opcao > 7){
+            printf("\n\n\n DIGITE APENAS VALORES CORESPONDENTES AO MENU!!!");
+            getch();
+         }
+            
+     }while(opcao <= 0 || opcao > 7);
+    
+    return opcao;
+}
+
 
 //===========================================================
 //SistemaVendaPassagensAviao.c
 //===========================================================
 
 int main(){
+	Voo v;
+	int opcao;
+	int loopContinue = TRUE;
+	
+	do{
+     system("cls");              
+     opcao = menuOpcao();                   
+     switch(opcao){
+        case 1: 	
+			system("cls");
+			iniciaVoo(&v);
+			break;
+					
+		case 2:		
+			system("cls");
+			
+			break;
+					
+		case 3:     
+			system("cls");
+			printf("\nOpcao nao implementada!\n");
+			break;
+					
+		case 4: 	
+			system("cls");
+			printf("\nOpcao nao implementada!\n");
+			break;
+					
+		case 5:     
+			system("cls");
+			printf("\nOpcao nao implementada!\n");
+			break;
+					
+		case 6: 
+			system("cls");
+			printf("\nOpcao nao implementada!\n");
+			break;
+		case 7:		
+			system("cls");
+			printf("ENCERRANDO O PROGRAMA\n");
+			loopContinue=FALSE;
+     }
+	}while(loopContinue);
 
-    return 0;
+	return 0;
 }
