@@ -1,5 +1,4 @@
 /*
-
 Universidade Federal de Goiás - UFG
 Instituto de Informática - INF
 Algoritmos e Estruturas de Dados 1 - AED
@@ -10,7 +9,6 @@ Alunos: GUSTAVO HENRIQUE DE FREITAS MARTINS
 	    JOSIMAR MORAIS DOS SANTOS
 
 SVPA - SISTEMA DE VENDAS DE PASSAGENS DE AVIÃO
-
 */
 
 #include <stdio.h>
@@ -20,205 +18,402 @@ SVPA - SISTEMA DE VENDAS DE PASSAGENS DE AVIÃO
 #define FALSE 0
 #define SUCCESS 1
 #define FAIL 0
-//===========================================================
-//Arquivo.h
-//===========================================================
-//DECLARACAO DE ESTRUTURAS:
-typedef struct Passagem*  ApontadorPassagem;
-typedef struct Registro* ApontadorRegistro;
-typedef struct ListaDeVoo* ApontadorLista;
 
+//=============================================================================================================================================
+//Arquivo.h
+//=============================================================================================================================================
+//DECLARACAO DE ESTRUTURAS:
+
+//cria a estrutura de um assento e também uma chave para identificar um passageiro em um Voo(Lista).
 typedef struct assento{
 	unsigned int fila;
-	char cadeira;
-}Assento;
+	unsigned int cadeira;
+}ASSENTO;
 
-typedef struct passagem{
+//Cria a estrutura de uma passagem.
+typedef struct {
     unsigned int cod;
     char nomePassageiro[50];
     char rg[10];
     char telefone[20];
     char email[50];
-    Assento poltrona;
+    ASSENTO poltrona;
     float valor;
-}Passagem;
+}REGISTRO;
 
-typedef struct registro {
-	Passagem  passagem;
-	ApontadorPassagem proximo;
-	ApontadorPassagem anterior;
-}Registro;
 
-typedef struct {
-	ApontadorRegistro inicio;
-	unsigned int qtdePassageiros;
-}ListaDeVoo;
+//Cria o Elemento PASSAGEM, onde cada PASSAGEM tem os dados do Passageiro(REGISTO) e tem a localização da próxima PASSAGEM.
+typedef struct aux{
+    REGISTRO reg;
+    struct aux *prox;
+}PASSAGEM;
 
+
+//Criando um novo nome para um Ponteiro de PASSAGEM. Agora, ApontadorPassagem é um ponteiro para uma estrutura do Tipo PASSAGEM.
+typedef PASSAGEM *ApontadorPassagem;
+
+
+//A estrutura Voo além de guardar as informações do voo, também guarda uma lista de passageiros, assim, voo é uma lista.
 typedef struct{
+    ApontadorPassagem inicio;
 	unsigned int numeroVoo;
-    unsigned int qtdePoltronas;
-    ApontadorLista passageiros;
+    int qtdePoltronas;
     char data[11];
 	char horario[6];
     char origem[20];
     char destino[20];
-}Voo;
+}VOO;
+
 
 //DECLARACAO DE PROTOTIPOS:
-int inicializaListaDeVoo (ApontadorLista l);
-int insereNovoRegistroNoInicio (ApontadorLista l, Passagem p);
-int iniciaVoo(Voo *v);
-int vendePassagem(Voo *v);
-int escolheAssento(Assento *a);
+void limparBuffer();
+
+int inicializarVooVazio(VOO *v);
+
+int inicializarVoo(VOO *v);
+
+void inicializarAssentos(VOO *v, ASSENTO a[]);
+
+void reservarCadeira(ASSENTO a[], unsigned int ca);
+
+void exibirPoltronasDisponiveis(VOO *v, ASSENTO a[]);
+
+ApontadorPassagem buscaSequencialAux(VOO *v, unsigned int ca, ApontadorPassagem *ant);
+
+int inserirElemListaOrd(VOO *v, REGISTRO reg);
+
+int venderPassagem(VOO *v, ASSENTO a[]);
+
+void exibirVoo(VOO *v);
+
+void exibirListaPassageiros(VOO *v);
+
+void menuInicial();
+
+int menuOpcao();
 
 
-//===========================================================
+
+
+
+//=============================================================================================================================================
 //Arquivo.c
-//===========================================================
-//DECLARACAO DE METODOS:
-
-int inicializaListaDeVoo (ApontadorLista l){
-	(*l)->inicio = NULL;
-	(*l)->qtdePassageiros = 0;
-	
-	return SUCCESS;
+//=============================================================================================================================================
+//função auxiliar para limpar o lixo do buffer de entrada do teclado
+void limparBuffer(){
+    char c;
+    while((c = getchar()) != '\n' && c != EOF);
 }
 
-int insereNovoRegistroNoInicio (ApontadorLista l, Passagem p){
-	ApontadorRegistro reg;
-	ApontadorRegistro primeiro;
-	
-	reg = (ApontadorRegistro) malloc (sizeof(Registro));
-	primeiro = (*l)->inicio;
-	if(reg == NULL) {
-		return FAIL;
-	}
-	else{
-		reg->passagem = p;
-	}
-		
-	if((l)->qtdePassageiros == 0) {
-		reg->anterior = NULL;
-		reg->proximo = NULL;
-		l->inicio = reg;
-	}
-	else{
-		reg->proximo = l.inicio;
-		reg->anterior = NULL;
-		primeiro->anterior = *reg;
-	}
-	
-	l->qtdePassageiros ++;
-	
-	return SUCCESS;
+//função criada apenas para auxiliar no desenvolvimento e testes do sistem, quando o sistema estiver finalizado, essa função será deletada
+int inicializarVooVazio(VOO *v){
+    v->qtdePoltronas = 40;
+    return v->qtdePoltronas;
 }
 
-int iniciaVoo(Voo *v){
-	//*v = (Voo) malloc (sizeof(Voo));
-	
-	//getchar();
-    printf("\nPREENCHA OS DADOS DA VOO\n");
+//função para poder inicializar um voo com todos os dados necessários do Voo. 
+int inicializarVoo(VOO *v){
+
+    v->inicio = NULL;
+    int i;
+    char caractere;
+
+    printf("\nPREENCHA OS DADOS DA VOO\n\n");
     printf("Insira o numero do voo: ");
     scanf("%u", &(v->numeroVoo));
+    limparBuffer();
     printf("\n");
     
-    //getchar();
     printf("Insira a quantidade de poltronas disponiveis para o voo: ");
-    scanf("%u", &(v->qtdePoltronas));
+    scanf("%d", &(v->qtdePoltronas));
+    limparBuffer();
     printf("\n");
     
-    getchar();
+    // O comandos Whiles utilizados abaixo, foram feitos para poder pegar as informações do cliente.
     printf("Qual a data do voo: ");
-    fgets(v->data, 11, stdin);
+    i = 0;
+        do{
+            caractere = getchar();
+            v->data[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        v->data[i - 1] = '\0';
     printf("\n");
-	
-	getchar();
+
     printf("Qual o horario do voo: ");
-    fgets(v->horario, 6, stdin);
+    i = 0;
+        do{
+            caractere = getchar();
+            v->horario[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        v->horario[i - 1] = '\0';
     printf("\n");
     
-    getchar();
     printf("Qual o local de origem do voo: ");
-    fgets(v->origem, 20, stdin);
+    i = 0;
+        do{
+            caractere = getchar();
+            v->origem[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        v->origem[i - 1] = '\0';
     printf("\n");
 
-    getchar();
     printf("Qual o local de destino do voo: ");
-    fgets(v->destino, 20, stdin);
+    i = 0;
+        do{
+            caractere = getchar();
+            v->destino[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        v->destino[i - 1] = '\0';
     printf("\n");
     
-    v->passageiros = (ApontadorLista) NULL;
-    inicializaListaDeVoo(v->passageiros);
+    printf("\nVOO INICIALIZADO COM SUCESSO\n");
+    system("pause");
     
-    return SUCCESS;
+    //retorando a quantidade de poltronas que o Voo vai ter para poder ser criada a função que mostra as Poltronas disponíveis
+    return v->qtdePoltronas;
 }
 
-int vendePassagem(Voo *v){
-	ApontadorPassagem p;
-	
-	p = (ApontadorPassagem) malloc (sizeof(Passagem));
-	
-	printf("\nPREENCHA OS DADOS DA PASSAGEM\n");
+//Essa função inicializa todos os assentos com 0. Assentos com 0 no seu valor, indique que o assento está disponível. 
+void inicializarAssentos(VOO *v, ASSENTO a[]){
+
+    int i = 0;
+    while(i < v->qtdePoltronas){
+        a[i].cadeira = 0;
+        i++;
+    }
+}
+
+//Essa função realizada a mudança do valor de uma cadeira de 0 para 1, isso faz com o que o assento fique ocupado.
+void reservarCadeira(ASSENTO a[], unsigned int ca){
+    a[ca].cadeira = 1;
+}
+
+//Essa função exibe todas as poltronas de um voo, se a poltrona estiver Disponível, ela mostra o número da Pontrona, se estiver ocupada mostra (XXXX)
+void exibirPoltronasDisponiveis(VOO *v, ASSENTO a[]){
+    int i = 1;
+    int j = 2;
+
+    system("cls");
+    printf("\n\tPAINEL DE OCUPACOES\n\n");
+    printf("        1       2       3       4\n");
+    printf(" 1: ");
+
+    i = 1;
+    j = 2;
+    while(i <= v->qtdePoltronas){
+
+        if(a[i].cadeira == 0){
+            if(i < 10){
+                printf(" (  %i ) ", i);
+            }else{
+                printf(" ( %i ) ", i);
+            }
+
+        }else{
+                printf(" (XXXX) ");
+        }
+
+        if(i == v->qtdePoltronas){
+
+        }else{
+            if(i % 4 == 0){
+
+                printf("\n");
+
+                    if(j < 10){
+                        printf(" %d: ", j);
+                    }else{
+                        printf("%d: ", j);    
+                    }
+                j++;
+             }
+        }
+        i++;
+    }   
+    printf("\n\n");
+}
+
+//Essa função auxilia na inserção e remoção de Passagens, Ela verifica se a passagem já existe basedo em uma chave, que aqui é o número da Cadeira
+ApontadorPassagem buscaSequencialAux(VOO *v, unsigned int ca, ApontadorPassagem *ant){
+    *ant = NULL;
+    ApontadorPassagem atual = v->inicio;
+    while((atual != NULL) && (atual->reg.poltrona.cadeira < ca)){
+        *ant = atual;
+        atual = atual->prox;
+    }
+    if((atual != NULL) && (atual->reg.poltrona.cadeira == ca))
+        return atual;
+    return NULL;
+}
+
+//função para inserir uma passagem no Lista de voo, Essa função é ordenada e sua ordenação é pela cadeira do voo.
+int inserirElemListaOrd(VOO *v, REGISTRO reg){
+    
+    unsigned int ca = reg.poltrona.cadeira;
+
+    ApontadorPassagem ant, i;
+    i = buscaSequencialAux(v, ca, &ant);
+    if(i != NULL)
+        return FALSE;
+    i = (ApontadorPassagem) malloc(sizeof(PASSAGEM));
+    i->reg = reg;
+    if(ant == NULL){
+        i->prox = v->inicio;
+        v->inicio = i;
+    }else{
+        i->prox = ant->prox;
+        ant->prox = i;
+    }
+    return TRUE;
+}
+
+//Função para realizar a venda de uma Passagem.
+int venderPassagem(VOO *v, ASSENTO a[]){
+
+    //registro criado temporariamente para armazenar os dados de entrada da nova passagem.
+    REGISTRO reg;
+    int i, res;
+    char caractere;
+
+    //PEGANDO OS DADOS DO CLIENTE
+    // O comandos Whiles utilizados abaixo, foram feitos para poder pegar as informações do cliente.
+    printf("\nPREENCHA OS DADOS DA PASSAGEM\n");
     printf("Insira o codigo da passagem: ");
-    scanf("%u", &(p->cod));
+    scanf("%u", &(reg.cod));
+    limparBuffer();
     printf("\n");
-    
-    getchar();
+
     printf("Qual o nome do passageiro: ");
-    fgets(p->nomePassageiro, 50, stdin);
+        i = 0;
+        do{
+            caractere = getchar();
+            reg.nomePassageiro[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        reg.nomePassageiro[i - 1] = '\0';
     printf("\n");
+
     
-    getchar();
-    printf("Qual o RG do passageiro: ");
-    fgets(p->rg, 10, stdin);
+    printf("RG do passageiro: ");
+        i = 0;
+        do{
+            caractere = getchar();
+            reg.rg[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        reg.rg[i - 1] = '\0';
     printf("\n");
-    
-    getchar();
+
+
     printf("Qual o telefone do passageiro: ");
-    fgets(p->telefone, 20, stdin);
+        i = 0;
+        do{
+            caractere = getchar();
+            reg.telefone[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        reg.telefone[i - 1] = '\0';
     printf("\n");
-    
-    getchar();
+
+
     printf("Qual o e-mail do passageiro: ");
-    fgets(p->emais, 50, stdin);
+        i = 0;
+        do{
+            caractere = getchar();
+            reg.email[i] = caractere;
+            i++;
+        }while( caractere != '\n');
+        reg.email[i - 1] = '\0';
     printf("\n");
-    
+
     printf("Insira o valor da passagem: R$");
-    scanf("%f", &(p->valor));
+    scanf("%f", &(reg.valor));
     printf("\n");
-    
-    escolheAssento(p->poltrona);
-    
-    if(!(insereNovoRegistroNoInicio (&(v->passageiros), p))) {
-    	printf("\nOperacao falhou!\n");
-    	return FAIL;
-	}
-	else{
-		printf("\nPassagem vendida com sucesso!\n");
-		return SUCCESS;
-	}
+
+    exibirPoltronasDisponiveis(v, a);
+    printf("\n\tESCOLHA SUA POLTRONA: \n");
+    printf("Escolha a Fileira: ");
+    scanf("%u",&(reg.poltrona.fila));
+    printf("\nEscolha a cadeira: ");
+    scanf("%u",&(reg.poltrona.cadeira));
+
+
+    //inserindo Passagem na Lista de Voo
+    res = inserirElemListaOrd(v, reg);
+
+    //Retirando dos Assentos disponíveis a cadeira comprada
+    reservarCadeira( a, reg.poltrona.cadeira);
+
+
+
+    //um print da passagem que acabou de ser vendida
+    system("cls");
+    printf("\nPASSAGEM REGISTRADA COM SUCESSO\n");
+    printf("DADOS DA PASSAGEM:\n\n");
+    printf("Codigo: %u\n", reg.cod);
+    printf("Nome Passageiro: %s\n", reg.nomePassageiro);
+    printf("RG: %s\n", reg.rg);
+    printf("Telefone: %s\n", reg.telefone);
+    printf("Email: %s\n", reg.email);
+    printf("Valor Da Passagem: %.2f\n", reg.valor);
+    printf("Poltrona Escolhida:\n");
+    printf("Fileira: %u, Cadeira: %u\n\n", reg.poltrona.fila, reg.poltrona.cadeira);
+
+    return 1;
 }
 
-int escolheAssento(Assento *a){
-	printf("\n ESCOLHA O ASSENTO");
-	printf("\n Informe o numero fila: ");
-    scanf("%u", &(a->fila));
-    
-    getchar();
-    printf("\n Informe a cadeira(A - F): ");
-    scanf("%c", &(a->cadeira));
-    printf("\n");
-    
-    return SUCCESS;
+//Função que exibe os dados de um voo, ela não exibe os passageiros.
+void exibirVoo(VOO *v){
+    printf("\n DADOS DO VOO\n");
+    printf(" Numero do Voo: %d\n", v->numeroVoo);
+    printf(" Quantidade De poltronas: %d\n", v->qtdePoltronas);
+    printf(" Data: %s\n", v->data);
+    printf(" Horario: %s\n", v->horario);
+    printf(" Origem: %s\n", v->origem);
+    printf(" Destino: %s\n\n", v->destino);
 }
 
+//Função para exibir a lista de passageiros do Voo. Essa lista é exibida pela ordem crescente. Essa ordem é baseada nas poltronas.
+void exibirListaPassageiros(VOO *v){
+    ApontadorPassagem end = v->inicio;
+    printf("\t\tLISTA DOS PASSAGEIROS:\n");
+    while (end != NULL){
+
+        printf("Cod: %u\n", end->reg.cod);
+        printf("Nome: %s\n", end->reg.nomePassageiro);
+        printf("RG: %s\n", end->reg.rg);
+        printf("TELEFONE: %s\n", end->reg.telefone);
+        printf("E-MAIL: %s\n", end->reg.email);
+        printf("Valor Da Passagem: %.2f\n", end->reg.valor);
+        printf("Poltrona Escolhida:\n");
+        printf("Fileira: %u, Cadeira: %u\n\n", end->reg.poltrona.fila, end->reg.poltrona.cadeira);
+        end = end->prox;
+    }
+    printf("\n");
+}
+
+//Função Inicial do sitema, ela é necessário para explicar para o usuario que precisa criar um voo antes de qualquer outra ação.
+void menuInicial(){
+    system("cls");
+    printf("\n\t\t\t\t     *** BEM VINDO AO SVPA ***\n\n");
+    printf("\t\t\t =.= SISTEMA DE VENDAS DE PASSAGENS DE AVIAO =.=\n\n\n\n");
+    printf("\t\tPARA UTILIZACAO DO SISTEMA E NECESSARIO REALIZAR O CADASTRO DO VOO \n");
+    printf("\t\t------------------------------------------------------------------\n\n\n");
+    
+}
+
+//Função de navegação do menu principal
 int menuOpcao(){
     int opcao=0;
     do {
          system("cls"); 
          printf("\n\n                      MENU   \n\n");
         
-         printf("\t\t 1- Iniciar Voo \n\n");
+         printf("\t\t 1- Exibir informacoes do Voo \n\n");
         
          printf("\t\t 2- Vender Passagem \n\n");
         
@@ -241,36 +436,64 @@ int menuOpcao(){
             
      }while(opcao <= 0 || opcao > 7);
     
+    system("cls");
+
     return opcao;
 }
 
 
-//===========================================================
+
+
+
+//=============================================================================================================================================
 //SistemaVendaPassagensAviao.c
-//===========================================================
+//=============================================================================================================================================
 
 int main(){
-	Voo v;
+	VOO v;
 	int opcao;
 	int loopContinue = TRUE;
+    int poltronas;
+    //int teste;
 	
+
+    //Menu inicial do sistema. Boas vindas.
+    menuInicial();
+
+
+    //inicializando um Voo
+    poltronas = inicializarVoo(&v);
+
+
+    //Informando para o sistema quantas poltronas vão ter o Voo.
+    ASSENTO a[poltronas];
+
+
+    //Realizando a inicialização dos assentos com 0. Isso indica que estão disponíveis.
+    inicializarAssentos(&v, a);
+
 	do{
      system("cls");              
-     opcao = menuOpcao();                   
+     opcao = menuOpcao();                  
      switch(opcao){
         case 1: 	
-			system("cls");
-			iniciaVoo(&v);
+			exibirVoo(&v);
+
+            system("pause");
+			system("cls"); 
 			break;
 					
 		case 2:		
-			system("cls");
-			
+			venderPassagem(&v, a);
+
+            system("pause");
+			system("cls"); 
 			break;
+
 					
 		case 3:     
 			system("cls");
-			printf("\nOpcao nao implementada!\n");
+			printf("\n\nOpcao nao implementada!\n");
 			break;
 					
 		case 4: 	
@@ -279,14 +502,22 @@ int main(){
 			break;
 					
 		case 5:     
-			system("cls");
-			printf("\nOpcao nao implementada!\n");
+            exibirListaPassageiros(&v);
+
+            system("pause");
+			system("cls"); 
 			break;
 					
 		case 6: 
-			system("cls");
-			printf("\nOpcao nao implementada!\n");
+            exibirPoltronasDisponiveis(&v, a);
+            printf("LEGENDA:\n");
+            printf("Poltronas que aparecem os numeros, estao disponiveis\n");
+            printf("Poltronas que aparecem (XXXX), estao ocupadas\n\n");
+
+            system("pause");
+			system("cls"); 
 			break;
+
 		case 7:		
 			system("cls");
 			printf("ENCERRANDO O PROGRAMA\n");
