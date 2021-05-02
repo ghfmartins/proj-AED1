@@ -88,6 +88,10 @@ void exibirVoo(VOO *v);
 
 void exibirRelatorioVendas(VOO *v);
 
+ApontadorPassagem buscaSequencial(VOO *v, unsigned int cadeira);
+
+void consultarPassageiro(VOO *v);
+
 void exibirListaPassageiros(VOO *v);
 
 void menuInicial();
@@ -400,6 +404,44 @@ void exibirRelatorioVendas(VOO *v){
     printf("\n");
 }
 
+//função que realiza um busca sequencial pela cadeira do Passageiro.
+ApontadorPassagem buscaSequencial(VOO *v, unsigned int cadeira){
+    ApontadorPassagem pos = v->inicio;
+    while(pos != NULL){
+        if(pos->reg.poltrona.cadeira == cadeira)
+            return pos;
+            pos = pos->prox;
+    }
+    return NULL;
+}
+
+//Funcão que exibe as informações de um dado passageiro baseada na cadeira que ele escolheu.
+void consultarPassageiro(VOO *v){
+
+    ApontadorPassagem end;
+    unsigned int cadeira;
+
+    printf("\t\t CONSULTAR UM PASSAGEIRO\n\n");
+    printf("Digite o numero da cadeira do Passageiro: ");
+    scanf("%u", &cadeira);
+
+    end = buscaSequencial(v, cadeira);
+
+    if(end == NULL){
+        printf("\n\tPASSAGEIRO NAO ENCONTRADO\n");
+        printf("\t=========================\n\n");
+    }else{
+        printf("\n\nDADOS DO PASSAGEIRO:\n\n");
+        printf("Nome: %s\n", end->reg.nomePassageiro);
+        printf("RG: %s\n", end->reg.rg);
+        printf("TELEFONE: %s\n", end->reg.telefone);
+        printf("E-MAIL: %s\n", end->reg.email);
+        printf("Cadeira: %u\n", end->reg.poltrona.cadeira);
+        printf("Fileira: %u\n\n", end->reg.poltrona.fila);
+    }
+
+}
+
 //Função para exibir a lista de passageiros do Voo. Essa lista é exibida pela ordem crescente. Essa ordem é baseada nas poltronas.
 void exibirListaPassageiros(VOO *v){
     ApontadorPassagem end = v->inicio;
@@ -518,7 +560,7 @@ int main(){
 			break;
 					
 		case 4: 	
-			printf("\nOpcao nao implementada!\n");
+			consultarPassageiro(&v);
 
             system("pause");
 			system("cls"); 
