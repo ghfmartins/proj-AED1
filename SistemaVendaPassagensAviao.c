@@ -86,6 +86,8 @@ int venderPassagem(VOO *v, ASSENTO a[]);
 
 void exibirVoo(VOO *v);
 
+void exibirRelatorioVendas(VOO *v);
+
 void exibirListaPassageiros(VOO *v);
 
 void menuInicial();
@@ -377,6 +379,27 @@ void exibirVoo(VOO *v){
     printf(" Destino: %s\n\n", v->destino);
 }
 
+//Função que realiza a soma do valor de todas as passagens vendidas e exibe um relatório do Voo com o valor total das passagens.
+void exibirRelatorioVendas(VOO *v){
+
+     ApontadorPassagem end = v->inicio;
+     float valorTotal = 0;
+
+    while (end != NULL){
+        valorTotal+= end->reg.valor;
+        end = end->prox;
+    }
+        
+    printf("\t\tRELATORIO DE VENDAS:\n\n");    
+    printf(" Numero do Voo: %d\n", v->numeroVoo);
+    printf(" Origem: %s\n", v->origem);
+    printf(" Destino: %s\n", v->destino);
+    printf(" Data: %s\n", v->data);
+    printf(" Horario: %s\n", v->horario);
+    printf(" Valor arrecadado: %.2f\n", valorTotal);
+    printf("\n");
+}
+
 //Função para exibir a lista de passageiros do Voo. Essa lista é exibida pela ordem crescente. Essa ordem é baseada nas poltronas.
 void exibirListaPassageiros(VOO *v){
     ApontadorPassagem end = v->inicio;
@@ -456,18 +479,14 @@ int main(){
     int poltronas;
     //int teste;
 	
-
     //Menu inicial do sistema. Boas vindas.
     menuInicial();
-
 
     //inicializando um Voo
     poltronas = inicializarVoo(&v);
 
-
     //Informando para o sistema quantas poltronas vão ter o Voo.
     ASSENTO a[poltronas];
-
 
     //Realizando a inicialização dos assentos com 0. Isso indica que estão disponíveis.
     inicializarAssentos(&v, a);
@@ -492,13 +511,17 @@ int main(){
 
 					
 		case 3:     
-			system("cls");
-			printf("\n\nOpcao nao implementada!\n");
+            exibirRelatorioVendas(&v);
+
+            system("pause");
+			system("cls"); 
 			break;
 					
 		case 4: 	
-			system("cls");
 			printf("\nOpcao nao implementada!\n");
+
+            system("pause");
+			system("cls"); 
 			break;
 					
 		case 5:     
