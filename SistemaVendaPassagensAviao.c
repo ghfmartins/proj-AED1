@@ -576,8 +576,8 @@ int main(){
 		case 6: 
             exibirPoltronasDisponiveis(&v, a);
             printf("LEGENDA:\n");
-            printf("Poltronas que aparecem os numeros, estao disponiveis\n");
-            printf("Poltronas que aparecem (XXXX), estao ocupadas\n\n");
+            printf("Poltronas que aparecem os n%cmeros, estao dispon%cveis\n", 163, 161);
+            printf("Poltronas que aparecem (XXXX), est%co ocupadas\n\n", 198);
 
             system("pause");
 			system("cls"); 
