@@ -478,21 +478,22 @@ int menuOpcao(){
          system("cls"); 
          printf("\n\n                      MENU   \n\n");
         
-         printf("\t\t 1- Exibir informacoes do Voo \n\n");
+         printf("\t\t 1- Exibir informa%c%ces do Voo \n\n",	135, 228);
         
          printf("\t\t 2- Vender Passagem \n\n");
         
-         printf("\t\t 3- Relatorio de Vendas \n\n");
+         printf("\t\t 3- Relat%crio de Vendas \n\n", 162);
         
          printf("\t\t 4- Consultar Passageiro \n\n");
          
          printf("\t\t 5- Listar Passageiros\n\n");
          
-         printf("\t\t 6- Mostrar Painel De Ocupacoes do Voo\n\n");
+         printf("\t\t 6- Mostrar Painel De Ocupa%c%ces do Voo\n\n", 135, 228);
          
          printf("\t\t 7- Sair\n\n");
         
-         printf("\t\t\t opcao: ");scanf("%d",&opcao);
+         printf("\t\t\t op%c%co: ", 135, 198);
+         scanf("%d",&opcao);
          
          if(opcao <= 0 || opcao > 7){
             printf("\n\n\n DIGITE APENAS VALORES CORESPONDENTES AO MENU!!!");
