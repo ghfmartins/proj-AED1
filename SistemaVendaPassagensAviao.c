@@ -448,7 +448,7 @@ void exibirListaPassageiros(VOO *v){
     printf("\t\tLISTA DOS PASSAGEIROS:\n");
     while (end != NULL){
 
-        printf("Cod: %u\n", end->reg.cod);
+        printf("C%cdigo: %u\n", 162, end->reg.cod);
         printf("Nome: %s\n", end->reg.nomePassageiro);
         printf("RG: %s\n", end->reg.rg);
         printf("TELEFONE: %s\n", end->reg.telefone);
