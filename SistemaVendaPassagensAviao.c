@@ -465,8 +465,8 @@ void exibirListaPassageiros(VOO *v){
 void menuInicial(){
     system("cls");
     printf("\n\t\t\t\t     *** BEM VINDO AO SVPA ***\n\n");
-    printf("\t\t\t =.= SISTEMA DE VENDAS DE PASSAGENS DE AVIAO =.=\n\n\n\n");
-    printf("\t\tPARA UTILIZACAO DO SISTEMA E NECESSARIO REALIZAR O CADASTRO DO VOO \n");
+    printf("\t\t\t =.= SISTEMA DE VENDAS DE PASSAGENS DE AVI%cO =.=\n\n\n\n", 199);
+    printf("\t\tPARA UTILIZA%c%cO DO SISTEMA E NECESS%cRIO REALIZAR O CADASTRO DO VOO \n", 128,  199 , 181);
     printf("\t\t------------------------------------------------------------------\n\n\n");
     
 }
