@@ -375,10 +375,10 @@ int venderPassagem(VOO *v, ASSENTO a[]){
 //Função que exibe os dados de um voo, ela não exibe os passageiros.
 void exibirVoo(VOO *v){
     printf("\n DADOS DO VOO\n");
-    printf(" Numero do Voo: %d\n", v->numeroVoo);
+    printf(" N%cmero do Voo: %d\n", 163, v->numeroVoo);
     printf(" Quantidade De poltronas: %d\n", v->qtdePoltronas);
     printf(" Data: %s\n", v->data);
-    printf(" Horario: %s\n", v->horario);
+    printf(" Hor%crio: %s\n", 160,v->horario);
     printf(" Origem: %s\n", v->origem);
     printf(" Destino: %s\n\n", v->destino);
 }
