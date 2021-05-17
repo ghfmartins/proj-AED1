@@ -125,12 +125,12 @@ int inicializarVoo(VOO *v){
     char caractere;
 
     printf("\nPREENCHA OS DADOS DA VOO\n\n");
-    printf("Insira o numero do voo: ");
+    printf("Insira o n%cmero do voo: ", 163);
     scanf("%u", &(v->numeroVoo));
     limparBuffer();
     printf("\n");
     
-    printf("Insira a quantidade de poltronas disponiveis para o voo: ");
+    printf("Insira a quantidade de poltronas dispon%cveis para o voo: ", 161);
     scanf("%d", &(v->qtdePoltronas));
     limparBuffer();
     printf("\n");
@@ -146,7 +146,7 @@ int inicializarVoo(VOO *v){
         v->data[i - 1] = '\0';
     printf("\n");
 
-    printf("Qual o horario do voo: ");
+    printf("Qual o hor%crio do voo: ", 160);
     i = 0;
         do{
             caractere = getchar();
@@ -204,7 +204,7 @@ void exibirPoltronasDisponiveis(VOO *v, ASSENTO a[]){
     int j = 2;
 
     system("cls");
-    printf("\n\tPAINEL DE OCUPACOES\n\n");
+    printf("\n\tPAINEL DE OCUPA%c%cES\n\n",128, 229);
     printf("        1       2       3       4\n");
     printf(" 1: ");
 
@@ -288,7 +288,7 @@ int venderPassagem(VOO *v, ASSENTO a[]){
     //PEGANDO OS DADOS DO CLIENTE
     // O comandos Whiles utilizados abaixo, foram feitos para poder pegar as informações do cliente.
     printf("\nPREENCHA OS DADOS DA PASSAGEM\n");
-    printf("Insira o codigo da passagem: ");
+    printf("Insira o c%cdigo da passagem: ", 162);
     scanf("%u", &(reg.cod));
     limparBuffer();
     printf("\n");
@@ -360,7 +360,7 @@ int venderPassagem(VOO *v, ASSENTO a[]){
     system("cls");
     printf("\nPASSAGEM REGISTRADA COM SUCESSO\n");
     printf("DADOS DA PASSAGEM:\n\n");
-    printf("Codigo: %u\n", reg.cod);
+    printf("C%cdigo: %u\n", 162, reg.cod);
     printf("Nome Passageiro: %s\n", reg.nomePassageiro);
     printf("RG: %s\n", reg.rg);
     printf("Telefone: %s\n", reg.telefone);
@@ -375,10 +375,10 @@ int venderPassagem(VOO *v, ASSENTO a[]){
 //Função que exibe os dados de um voo, ela não exibe os passageiros.
 void exibirVoo(VOO *v){
     printf("\n DADOS DO VOO\n");
-    printf(" Numero do Voo: %d\n", v->numeroVoo);
+    printf(" N%cmero do Voo: %d\n", 163, v->numeroVoo);
     printf(" Quantidade De poltronas: %d\n", v->qtdePoltronas);
     printf(" Data: %s\n", v->data);
-    printf(" Horario: %s\n", v->horario);
+    printf(" Hor%crio: %s\n", 160,v->horario);
     printf(" Origem: %s\n", v->origem);
     printf(" Destino: %s\n\n", v->destino);
 }
@@ -394,12 +394,12 @@ void exibirRelatorioVendas(VOO *v){
         end = end->prox;
     }
         
-    printf("\t\tRELATORIO DE VENDAS:\n\n");    
-    printf(" Numero do Voo: %d\n", v->numeroVoo);
+    printf("\t\tRELAT%cRIO DE VENDAS:\n\n", 224);    
+    printf(" N%cmero do Voo: %d\n", 163, v->numeroVoo);
     printf(" Origem: %s\n", v->origem);
     printf(" Destino: %s\n", v->destino);
     printf(" Data: %s\n", v->data);
-    printf(" Horario: %s\n", v->horario);
+    printf(" Hor%crio: %s\n", 160, v->horario);
     printf(" Valor arrecadado: %.2f\n", valorTotal);
     printf("\n");
 }
@@ -420,15 +420,15 @@ void consultarPassageiro(VOO *v, ASSENTO a[]){
 
     ApontadorPassagem end;
     unsigned int cadeira;
-    exibirPoltronasDisponiveis(v, a);
-    printf("\n\n **- CONSULTAR UM PASSAGEIRO -**\n\n");
-    printf("Digite o numero da cadeira do Passageiro: ");
+
+    printf("\t\t CONSULTAR UM PASSAGEIRO\n\n");
+    printf("Digite o n%cmero da cadeira do Passageiro: ", 163);
     scanf("%u", &cadeira);
 
     end = buscaSequencial(v, cadeira);
 
     if(end == NULL){
-        printf("\n\tPASSAGEIRO NAO ENCONTRADO\n");
+        printf("\n\tPASSAGEIRO N%cO ENCONTRADO\n", 199);
         printf("\t=========================\n\n");
     }else{
         printf("\n\nDADOS DO PASSAGEIRO:\n\n");
@@ -448,7 +448,7 @@ void exibirListaPassageiros(VOO *v){
     printf("\t\tLISTA DOS PASSAGEIROS:\n");
     while (end != NULL){
 
-        printf("Cod: %u\n", end->reg.cod);
+        printf("C%cdigo: %u\n", 162, end->reg.cod);
         printf("Nome: %s\n", end->reg.nomePassageiro);
         printf("RG: %s\n", end->reg.rg);
         printf("TELEFONE: %s\n", end->reg.telefone);
@@ -465,8 +465,8 @@ void exibirListaPassageiros(VOO *v){
 void menuInicial(){
     system("cls");
     printf("\n\t\t\t\t     *** BEM VINDO AO SVPA ***\n\n");
-    printf("\t\t\t =.= SISTEMA DE VENDAS DE PASSAGENS DE AVIAO =.=\n\n\n\n");
-    printf("\t\tPARA UTILIZACAO DO SISTEMA E NECESSARIO REALIZAR O CADASTRO DO VOO \n");
+    printf("\t\t\t =.= SISTEMA DE VENDAS DE PASSAGENS DE AVI%cO =.=\n\n\n\n", 199);
+    printf("\t\tPARA UTILIZA%c%cO DO SISTEMA E NECESS%cRIO REALIZAR O CADASTRO DO VOO \n", 128,  199 , 181);
     printf("\t\t------------------------------------------------------------------\n\n\n");
     
 }
