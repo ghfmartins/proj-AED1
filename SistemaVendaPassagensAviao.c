@@ -204,7 +204,7 @@ void exibirPoltronasDisponiveis(VOO *v, ASSENTO a[]){
     int j = 2;
 
     system("cls");
-    printf("\n\tPAINEL DE OCUPACOES\n\n");
+    printf("\n\tPAINEL DE OCUPA%c%cES\n\n",128, 229);
     printf("        1       2       3       4\n");
     printf(" 1: ");
 
