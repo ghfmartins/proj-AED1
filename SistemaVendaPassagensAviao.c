@@ -422,13 +422,13 @@ void consultarPassageiro(VOO *v){
     unsigned int cadeira;
 
     printf("\t\t CONSULTAR UM PASSAGEIRO\n\n");
-    printf("Digite o numero da cadeira do Passageiro: ");
+    printf("Digite o n%cmero da cadeira do Passageiro: ", 163);
     scanf("%u", &cadeira);
 
     end = buscaSequencial(v, cadeira);
 
     if(end == NULL){
-        printf("\n\tPASSAGEIRO NAO ENCONTRADO\n");
+        printf("\n\tPASSAGEIRO N%cO ENCONTRADO\n", 199);
         printf("\t=========================\n\n");
     }else{
         printf("\n\nDADOS DO PASSAGEIRO:\n\n");
