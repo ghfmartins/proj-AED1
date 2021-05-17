@@ -421,7 +421,8 @@ void consultarPassageiro(VOO *v, ASSENTO a[]){
     ApontadorPassagem end;
     unsigned int cadeira;
 
-    printf("\t\t CONSULTAR UM PASSAGEIRO\n\n");
+    exibirPoltronasDisponiveis(v, a);
+    printf("\n\n **- CONSULTAR UM PASSAGEIRO -**\n\n");
     printf("Digite o n%cmero da cadeira do Passageiro: ", 163);
     scanf("%u", &cadeira);
 
