@@ -394,12 +394,12 @@ void exibirRelatorioVendas(VOO *v){
         end = end->prox;
     }
         
-    printf("\t\tRELATORIO DE VENDAS:\n\n");    
-    printf(" Numero do Voo: %d\n", v->numeroVoo);
+    printf("\t\tRELAT%cRIO DE VENDAS:\n\n", 224);    
+    printf(" N%cmero do Voo: %d\n", 163, v->numeroVoo);
     printf(" Origem: %s\n", v->origem);
     printf(" Destino: %s\n", v->destino);
     printf(" Data: %s\n", v->data);
-    printf(" Horario: %s\n", v->horario);
+    printf(" Hor%crio: %s\n", 160, v->horario);
     printf(" Valor arrecadado: %.2f\n", valorTotal);
     printf("\n");
 }
