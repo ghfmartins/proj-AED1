@@ -90,7 +90,7 @@ void exibirRelatorioVendas(VOO *v);
 
 ApontadorPassagem buscaSequencial(VOO *v, unsigned int cadeira);
 
-void consultarPassageiro(VOO *v);
+void consultarPassageiro(VOO *v, ASSENTO a[]);
 
 void exibirListaPassageiros(VOO *v);
 
@@ -416,12 +416,13 @@ ApontadorPassagem buscaSequencial(VOO *v, unsigned int cadeira){
 }
 
 //Funcão que exibe as informações de um dado passageiro baseada na cadeira que ele escolheu.
-void consultarPassageiro(VOO *v){
+void consultarPassageiro(VOO *v, ASSENTO a[]){
 
     ApontadorPassagem end;
     unsigned int cadeira;
 
-    printf("\t\t CONSULTAR UM PASSAGEIRO\n\n");
+    exibirPoltronasDisponiveis(v, a);
+    printf("\n\n **- CONSULTAR UM PASSAGEIRO -**\n\n");
     printf("Digite o n%cmero da cadeira do Passageiro: ", 163);
     scanf("%u", &cadeira);
 
@@ -561,7 +562,7 @@ int main(){
 			break;
 					
 		case 4: 	
-			consultarPassageiro(&v);
+			consultarPassageiro(&v, a);
 
             system("pause");
 			system("cls"); 
