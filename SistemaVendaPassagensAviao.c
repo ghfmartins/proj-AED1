@@ -288,7 +288,7 @@ int venderPassagem(VOO *v, ASSENTO a[]){
     //PEGANDO OS DADOS DO CLIENTE
     // O comandos Whiles utilizados abaixo, foram feitos para poder pegar as informações do cliente.
     printf("\nPREENCHA OS DADOS DA PASSAGEM\n");
-    printf("Insira o codigo da passagem: ");
+    printf("Insira o c%cdigo da passagem: ", 162);
     scanf("%u", &(reg.cod));
     limparBuffer();
     printf("\n");
@@ -360,7 +360,7 @@ int venderPassagem(VOO *v, ASSENTO a[]){
     system("cls");
     printf("\nPASSAGEM REGISTRADA COM SUCESSO\n");
     printf("DADOS DA PASSAGEM:\n\n");
-    printf("Codigo: %u\n", reg.cod);
+    printf("C%cdigo: %u\n", 162, reg.cod);
     printf("Nome Passageiro: %s\n", reg.nomePassageiro);
     printf("RG: %s\n", reg.rg);
     printf("Telefone: %s\n", reg.telefone);
