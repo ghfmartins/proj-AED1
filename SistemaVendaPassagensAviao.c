@@ -125,12 +125,12 @@ int inicializarVoo(VOO *v){
     char caractere;
 
     printf("\nPREENCHA OS DADOS DA VOO\n\n");
-    printf("Insira o numero do voo: ");
+    printf("Insira o n%cmero do voo: ", 163);
     scanf("%u", &(v->numeroVoo));
     limparBuffer();
     printf("\n");
     
-    printf("Insira a quantidade de poltronas disponiveis para o voo: ");
+    printf("Insira a quantidade de poltronas dispon%cveis para o voo: ", 161);
     scanf("%d", &(v->qtdePoltronas));
     limparBuffer();
     printf("\n");
@@ -146,7 +146,7 @@ int inicializarVoo(VOO *v){
         v->data[i - 1] = '\0';
     printf("\n");
 
-    printf("Qual o horario do voo: ");
+    printf("Qual o hor%crio do voo: ", 160);
     i = 0;
         do{
             caractere = getchar();
