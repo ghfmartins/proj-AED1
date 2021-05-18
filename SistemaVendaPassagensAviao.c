@@ -284,6 +284,7 @@ int venderPassagem(VOO *v, ASSENTO a[]){
     REGISTRO reg;
     int i, res;
     char caractere;
+    unsigned int aux;
 
     //PEGANDO OS DADOS DO CLIENTE
     // O comandos Whiles utilizados abaixo, foram feitos para poder pegar as informações do cliente.
@@ -344,9 +345,24 @@ int venderPassagem(VOO *v, ASSENTO a[]){
     printf("\n\tESCOLHA SUA POLTRONA: \n");
     printf("Escolha a Fileira: ");
     scanf("%u",&(reg.poltrona.fila));
-    printf("\nEscolha a cadeira: ");
-    scanf("%u",&(reg.poltrona.cadeira));
+    
 
+    i = 0;
+    //laço criado para impedir que se escolha uma cadeira que já foi vendida
+    while(i != 1){
+
+        printf("\nEscolha a cadeira: ");
+        scanf("%u",&(reg.poltrona.cadeira));
+        aux = reg.poltrona.cadeira;
+
+        if(a[aux].cadeira == 1){
+            printf("\n\n --**CADEIRA INDISPON%cVEL**--\n\n", 214);
+            printf("ESCOLHA UMA CADEIRA QUE ESTEJA DISPON%CVEL\n\n", 214);
+            printf("Cadeiras dispon%cveis s%co aquelas que aparecem os n%cmeros no menu acima apresentado\n\n\n", 161, 198, 163);
+        }else{
+            i = 1;
+        }
+    }
 
     //inserindo Passagem na Lista de Voo
     res = inserirElemListaOrd(v, reg);
