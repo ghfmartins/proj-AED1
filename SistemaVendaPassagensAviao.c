@@ -282,15 +282,39 @@ int venderPassagem(VOO *v, ASSENTO a[]){
 
     //registro criado temporariamente para armazenar os dados de entrada da nova passagem.
     REGISTRO reg;
-    int i, res;
+    ApontadorPassagem end;
+    int i, codigoEncontrado, res;
     char caractere;
     unsigned int aux;
+
 
     //PEGANDO OS DADOS DO CLIENTE
     // O comandos Whiles utilizados abaixo, foram feitos para poder pegar as informações do cliente.
     printf("\nPREENCHA OS DADOS DA PASSAGEM\n");
-    printf("Insira o c%cdigo da passagem: ", 162);
-    scanf("%u", &(reg.cod));
+    
+    i = 0;
+    //laço criado para impedir que se escolha um código já utilizado
+    while (i != 1){
+        printf("Insira o c%cdigo da passagem: ", 162);
+        scanf("%u", &(reg.cod));
+
+        //verifica em todas as passagens já vendidas se o código digitado já existe
+        end = v->inicio;
+        while(end != NULL){
+            if( reg.cod == end->reg.cod)
+                codigoEncontrado = 1;
+            end = end->prox;
+        }
+
+        if(codigoEncontrado == 1){
+            printf("\n\n**C%cDIGO J%c UTILIZADO**\n", 224, 181);
+            printf("POR FAVOR, ESCOLHER OUTRO C%cDIGO\n\n\n", 224);
+            codigoEncontrado = 0;
+        }else{
+            i = 1;
+        }
+    }
+    
     limparBuffer();
     printf("\n");
 
