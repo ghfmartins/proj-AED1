@@ -187,7 +187,7 @@ int inicializarVoo(VOO *v){
 void inicializarAssentos(VOO *v, ASSENTO a[]){
 
     int i = 0;
-    while(i < v->qtdePoltronas){
+    while(i <= v->qtdePoltronas){
         a[i].cadeira = 0;
         i++;
     }
@@ -204,7 +204,7 @@ void exibirPoltronasDisponiveis(VOO *v, ASSENTO a[]){
     int j = 2;
 
     system("cls");
-    printf("\n\tPAINEL DE OCUPA%c%cES\n\n",128, 229);
+    printf("\n\t%c PAINEL DE OCUPA%c%cES %c\n\n",16, 128, 229, 17);
     printf("        1       2       3       4\n");
     printf(" 1: ");
 
@@ -290,7 +290,7 @@ int venderPassagem(VOO *v, ASSENTO a[]){
 
     //PEGANDO OS DADOS DO CLIENTE
     // O comandos Whiles utilizados abaixo, foram feitos para poder pegar as informações do cliente.
-    printf("\nPREENCHA OS DADOS DA PASSAGEM\n");
+    printf("\n %c PREENCHA OS DADOS DA PASSAGEM %c \n", 16, 17);
     
     i = 0;
     //laço criado para impedir que se escolha um código já utilizado
@@ -414,7 +414,7 @@ int venderPassagem(VOO *v, ASSENTO a[]){
 
 //Função que exibe os dados de um voo, ela não exibe os passageiros.
 void exibirVoo(VOO *v){
-    printf("\n DADOS DO VOO\n");
+    printf("\t\t %c DADOS DO VOO %c\n", 16, 17);
     printf(" N%cmero do Voo: %d\n", 163, v->numeroVoo);
     printf(" Quantidade De poltronas: %d\n", v->qtdePoltronas);
     printf(" Data: %s\n", v->data);
@@ -434,7 +434,7 @@ void exibirRelatorioVendas(VOO *v){
         end = end->prox;
     }
         
-    printf("\t\tRELAT%cRIO DE VENDAS:\n\n", 224);    
+    printf("\t\t %c RELAT%cRIO DE VENDAS %c \n\n",16, 224, 17);    
     printf(" N%cmero do Voo: %d\n", 163, v->numeroVoo);
     printf(" Origem: %s\n", v->origem);
     printf(" Destino: %s\n", v->destino);
@@ -462,7 +462,7 @@ void consultarPassageiro(VOO *v, ASSENTO a[]){
     unsigned int cadeira;
 
     exibirPoltronasDisponiveis(v, a);
-    printf("\n\n **- CONSULTAR UM PASSAGEIRO -**\n\n");
+    printf("\n\n %c CONSULTAR UM PASSAGEIRO %c\n\n", 16, 17);
     printf("Digite o n%cmero da cadeira do Passageiro: ", 163);
     scanf("%u", &cadeira);
 
@@ -486,7 +486,7 @@ void consultarPassageiro(VOO *v, ASSENTO a[]){
 //Função para exibir a lista de passageiros do Voo. Essa lista é exibida pela ordem crescente. Essa ordem é baseada nas poltronas.
 void exibirListaPassageiros(VOO *v){
     ApontadorPassagem end = v->inicio;
-    printf("\t\tLISTA DOS PASSAGEIROS:\n");
+    printf("\t\t%c LISTA DOS PASSAGEIROS %c\n", 16, 17);
     while (end != NULL){
 
         printf("C%cdigo: %u\n", 162, end->reg.cod);
